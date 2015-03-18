@@ -1,0 +1,7 @@
+- hosts: asterisk
+  vars_files:
+    - vars/main.yml
+  tasks:
+    - include: 'tasks/main.yml'
+#      roles:
+#         - { role: username.rolename, x: 42 }
