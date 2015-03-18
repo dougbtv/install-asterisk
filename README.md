@@ -20,7 +20,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.install-asterisk, foo: "bar" }
+         - { role: dougbtv.install-asterisk, foo: "bar" }
 
 (foo: bar is given as an example, no parameters have been created as of yet)
 
