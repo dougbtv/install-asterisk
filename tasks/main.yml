@@ -49,3 +49,13 @@
     - make config
     - make samples
 
+- name: Download asterisk sounds (ulaw format)
+  get_url: "url={{ iasterisk_url_sounds }} dest={{ iasterisk_path_soundstarball }}"
+
+- name: Create install dir
+  file: "path={{ iasterisk_srcdir }} state=directory"
+
+- name: Unpack sounds
+  command: "tar -xzf {{ iasterisk_path_soundstarball }} -C {{ iasterisk_path_sound }}"
+
+

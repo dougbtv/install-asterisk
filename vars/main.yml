@@ -3,3 +3,6 @@
 iasterisk_tarball: /usr/src/iasterisk.tar.gz
 iasterisk_srcdir: /usr/src/iasterisk/
 iasterisk_url: http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-11.6-current.tar.gz
+iasterisk_url_sounds: http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-en-ulaw-current.tar.gz
+iasterisk_path_soundstarball: /usr/src/asterisk_sounds.tar.gz
+iasterisk_path_sound: /var/lib/asterisk/sounds/en
