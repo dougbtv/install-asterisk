@@ -1,0 +1,93 @@
+---
+
+- name: "Create Asterisk Group"
+  group: "name={{ asterisk_group }} state=present"
+
+- name: "Add Asterisk User"
+  user: "name={{ asterisk_user }} comment='Asterisk process user' shell=/sbin/nologin group={{ asterisk_group }}"
+
+- name: Check if we have a config backup...
+  stat: path=/etc/asterisk/original.asterisk.conf
+  register: iasterisk_backup_file
+
+- name: Make backup of asterisk.conf
+  when: iasterisk_backup_file.stat.exists == False
+  shell: rsync -ci /etc/asterisk/asterisk.conf /etc/asterisk/original.asterisk.conf
+  register: rsync_result
+  changed_when: "rsync_result.stdout != ''"
+
+- name: Modify provided asterisk.conf to strip remarks (INI module can't process without it)
+  when: iasterisk_backup_file.stat.exists == False
+  command: 'sed -i -e "/^\s*;/d" /etc/asterisk/asterisk.conf'
+
+- name: Set INI options in asterisk.conf to reflect asterisk user
+  ini_file: 
+    dest: "/etc/asterisk/asterisk.conf" 
+    section: "{{ item.option }}" 
+    option: "{{ item.option }}" 
+    value: "{{ item.value }}" 
+  with_items:
+    - { section: "files", option: "astctlpermissions", value: "0775"}
+    - { section: "files", option: "astctlowner", value: 'astctlowner = {{asterisk_user}}'}
+    - { section: "files", option: "astctlgroup", value: 'astctlgroup = {{asterisk_group}}'}
+    - { section: "files", option: "astctl", value: 'astctl = asterisk.ctl'}
+    - { section: "options", option: "runuser", value: '{{asterisk_user}}'}
+    - { section: "options", option: "rungroup", value: '{{asterisk_group}}'}
+
+- name: Fix INI file to be asterisk-ish-y
+  command: 'sed -i -e "s/= >/=>/g" /etc/asterisk/asterisk.conf'
+
+
+- name: Set ownership on important directories for the asterisk user
+  file: "path={{ item.path }} owner={{ asterisk_user }} group={{ asterisk_group}} recurse=yes"
+  with_items:
+    - { path: '/usr/lib64/asterisk/' }
+    - { path: '/var/lib/asterisk/' }
+    - { path: '/var/spool/asterisk/' }
+    - { path: '/var/log/asterisk/' }
+    - { path: '/var/run/asterisk/' }
+
+- name: Set ownership on important files for the asterisk user
+  file: "path={{ item.path }} owner={{ asterisk_user }} group={{ asterisk_group}}"
+  with_items:
+    - { path: '/usr/sbin/asterisk' }
+
+
+# ------------------------ - - - - - 
+# REFERENCE FROM:
+# http://dougbtv.com/asterisk/2012/09/20/tighting-down-asterisk-on-centos-dont-run-as-root/
+# ------------------------ - - - - - 
+
+# # You probably want to have something less obvious than "asterisk" as the user name, fwiw.
+# [user@host ~]$ /usr/sbin/useradd asterisk
+# [user@host ~]$ passwd asterisk
+# # assuming you don't want them to login [I don't].
+# [user@host ~]$ usermod -s /usr/sbin/nologin asterisk
+# # Next, add your user to the asterisk group.
+# [user@host ~]$ usermod -a -G asterisk your_user_name
+# # Then apply the permissions as suggested by Leif in *:TFoT
+# [user@host ~]$ chown -R asterisk:asterisk /usr/lib/asterisk/
+# [user@host ~]$ chown -R asterisk:asterisk /var/lib/asterisk/
+# [user@host ~]$ chown -R asterisk:asterisk /var/spool/asterisk/
+# [user@host ~]$ chown -R asterisk:asterisk /var/log/asterisk/
+# [user@host ~]$ chown -R asterisk:asterisk /var/run/asterisk/
+# [user@host ~]$ chown asterisk:asterisk /usr/sbin/asterisk
+
+# ------------------------ - - - - -
+
+# And then you'll have to set that in the asterisk.conf, that you want asterisk to run as that user, uncomment these lines / tailor the user & group:
+
+# runuser = asterisk              ; The user to run as.
+# rungroup = asterisk             ; The group to run as.
+
+# ------------------------ - - - - -
+
+# What's left out in Leif's process is making sure your asterisk.ctl file in /var/run/asterisk/ has proper permission so that users of the asterisk group can write to it. 
+# These settings can be found in the asterisk.conf file as well.
+
+# ; Changing the following lines may compromise your security.
+# [files]
+# astctlpermissions = 0775
+# astctlowner = asterisk
+# astctlgroup = asterisk
+# astctl = asterisk.ctl

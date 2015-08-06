@@ -1,5 +1,7 @@
 ---
 # vars file for install-asterisk
+asterisk_user: asterisk
+asterisk_group: asterisk
 iasterisk_tarball: /usr/src/iasterisk.tar.gz
 iasterisk_srcdir: /usr/src/iasterisk/
 iasterisk_url: http://downloads.asterisk.org/pub/telephony/certified-asterisk/certified-asterisk-11.6-current.tar.gz

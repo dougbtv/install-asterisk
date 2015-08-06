@@ -1,0 +1,61 @@
+---
+# tasks file for install-asterisk
+
+- name: Install asterisk pre-requisites via yum
+  yum: "pkg={{item}} state=installed"
+  with_items:
+    - kernel-headers 
+    - gcc 
+    - gcc-c++ 
+    - cpp 
+    - ncurses 
+    - ncurses-devel 
+    - libxml2 
+    - libxml2-devel 
+    - sqlite 
+    - sqlite-devel 
+    - openssl-devel 
+    - newt-devel 
+    - kernel-devel 
+    - libuuid-devel 
+    - net-snmp-devel
+
+- name: Remove existing tarball
+  file: "path={{ iasterisk_tarball }} state=absent"
+
+- name: Download asterisk tarball
+  get_url: "url={{ iasterisk_url }} dest={{ iasterisk_tarball }}"
+
+- name: Remove existing install source dir
+  file: "path={{ iasterisk_srcdir }} state=absent"
+
+- name: Create install dir
+  file: "path={{ iasterisk_srcdir }} state=directory"
+
+- name: Unpack tarball
+  command: "tar -xzf {{ iasterisk_tarball }} -C {{ iasterisk_srcdir }} --strip-components=1"
+
+- name: Build Asterisk from tarball
+  command: "{{ item }} chdir={{ iasterisk_srcdir }}"
+  with_items:
+    - ./configure --libdir=/usr/lib64
+    - make menuselect.makeopts
+    - sed -i -e 's/res_snmp//' menuselect.makeopts
+    - sed -i -e 's/chan_sip//' menuselect.makeopts
+    - sed -i -e 's/res_http_websocket//' menuselect.makeopts
+    - make
+    - make uninstall
+    - make install
+    - make config
+    - make samples
+
+- name: Download asterisk sounds (ulaw format)
+  get_url: "url={{ iasterisk_url_sounds }} dest={{ iasterisk_path_soundstarball }}"
+
+- name: Create install dir
+  file: "path={{ iasterisk_srcdir }} state=directory"
+
+- name: Unpack sounds
+  command: "tar -xzf {{ iasterisk_path_soundstarball }} -C {{ iasterisk_path_sound }}"
+
+
