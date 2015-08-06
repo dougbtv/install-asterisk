@@ -11,13 +11,13 @@
   register: iasterisk_backup_file
 
 - name: Make backup of asterisk.conf
-  when: iasterisk_backup_file.stat.exists == False
+#  when: iasterisk_backup_file.stat.exists == False
   shell: rsync -ci /etc/asterisk/asterisk.conf /etc/asterisk/original.asterisk.conf
   register: rsync_result
   changed_when: "rsync_result.stdout != ''"
 
 - name: Modify provided asterisk.conf to strip remarks (INI module can't process without it)
-  when: iasterisk_backup_file.stat.exists == False
+#  when: iasterisk_backup_file.stat.exists == False
   command: 'sed -i -e "/^\s*;/d" /etc/asterisk/asterisk.conf'
 
 - name: Set INI options in asterisk.conf to reflect asterisk user
