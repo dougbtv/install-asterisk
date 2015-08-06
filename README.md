@@ -16,13 +16,19 @@ Role Variables
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Here's the vanilla way to use it, to install Asterisk:
 
     - hosts: servers
       roles:
-         - { role: dougbtv.install-asterisk, foo: "bar" }
+         - { role: dougbtv.install-asterisk }
 
-(foo: bar is given as an example, no parameters have been created as of yet)
+But, if you'd like to configure the user asterisk runs as you can do:
+
+    - hosts: servers
+      roles:
+         - { role: dougbtv.install-asterisk, configure_user: true, asterisk_user: "asterisk", asterisk_group: "asterisk" }
+
+The `asterisk_user` and `asterisk_group` are optional, and default the "asterisk". If you don't want to configure the user, just omit the variable entirely.
 
 License
 -------
