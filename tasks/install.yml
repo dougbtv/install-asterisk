@@ -1,6 +1,9 @@
 ---
 # tasks file for install-asterisk
 
+- name: Install epel
+  yum: "pkg=epel-release state=installed"
+
 - name: Install asterisk pre-requisites via yum
   yum: "pkg={{item}} state=installed"
   with_items:
@@ -19,6 +22,10 @@
     - kernel-devel 
     - libuuid-devel 
     - net-snmp-devel
+    - bzip2
+    - jansson-devel
+
+- include: pjsip.yml
 
 - name: Remove existing tarball
   file: "path={{ iasterisk_tarball }} state=absent"

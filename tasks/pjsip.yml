@@ -1,0 +1,24 @@
+# RUN mkdir /tmp/pjproject
+
+- name: Make temp pjproject dir
+  file: "path=/tmp/pjproject state=directory"
+
+# RUN curl -sf -o /tmp/pjproject.tar.bz2 -L http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2
+
+- name: download pjsip
+  get_url: 
+    url: http://www.pjsip.org/release/2.4.5/pjproject-2.4.5.tar.bz2
+    dest: /tmp/pjproject.tar.bz2
+
+# RUN tar -xjvf /tmp/pjproject.tar.bz2 -C /tmp/pjproject --strip-components=1
+- name: unzip pjsip
+  unarchive: src=/tmp/pjproject.tar.bz2 dest=/tmp/pjproject copy=no
+
+- name: Build pjsip from tarball
+  command: "{{ item }} chdir=/tmp/pjproject/pjproject-2.4.5"
+  with_items:
+    - ./configure --prefix=/usr --libdir=/usr/lib64 --enable-shared --disable-sound --disable-resample --disable-video --disable-opencore-amr
+    - make dep
+    - make
+    - make install
+    - ldconfig

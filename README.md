@@ -1,7 +1,7 @@
 install-asterisk
 =========
 
-This is an ansible role for installing Asterisk.
+This is an ansible role for installing Asterisk, it tracks Asterisk 13 certified branch.
 
 Requirements
 ------------
