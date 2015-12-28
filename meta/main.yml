@@ -3,7 +3,7 @@ galaxy_info:
   author: Doug Smith
   description: Installs / Uninstalls Asterisk from source on Centos
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: 1.8
   #
   # Below are all platforms currently available. Just uncomment
   # the ones that apply to your role. If you don't see your 
