@@ -1,4 +1,4 @@
-- hosts: IVR
+- hosts: asterisk_machines
   vars_files:
     - vars/main.yml
   tasks:

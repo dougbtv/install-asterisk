@@ -1,0 +1,4 @@
+some_server ansible_ssh_host=10.0.0.1 ansible_ssh_user=root
+
+[asterisk_machines]
+some_server
