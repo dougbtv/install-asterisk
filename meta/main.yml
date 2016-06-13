@@ -13,7 +13,7 @@ galaxy_info:
   - name: EL
     versions:
      - 6
-  categories:
+  galaxy_tags:
     - networking
     - packaging
     - system
