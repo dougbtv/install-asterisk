@@ -17,7 +17,8 @@ galaxy_info:
     - networking
     - packaging
     - system
-  dependencies: "[]"
+
+dependencies: []
   
   # List your role dependencies here, one per line. Only
   # dependencies available via galaxy should be listed here.
