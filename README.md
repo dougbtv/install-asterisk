@@ -13,30 +13,39 @@ Role Variables
 
 (none yet)
 
+Install via ansible-galaxy
+--------------------------
+
+Use ansible galaxy to download this role with:
+
+    ansible-galaxy install dougbtv.install-asterisk
+
 Example Playbook
 ----------------
 
-Here's the vanilla way to use it, to install Asterisk:
+Here's the vanilla way to use it, after installing via ansible-galaxy, to install Asterisk:
 
     - hosts: servers
       roles:
-         - { role: install-asterisk }
+         - { role: dougbtv.install-asterisk }
 
 But, if you'd like to configure the user asterisk runs as you can do:
 
     - hosts: servers
       roles:
-         - { role: install-asterisk, configure_user: true, asterisk_user: "asterisk", asterisk_group: "asterisk" }
+         - { role: dougbtv.install-asterisk, configure_user: true, asterisk_user: "asterisk", asterisk_group: "asterisk" }
 
 The `asterisk_user` and `asterisk_group` are optional, and default the "asterisk". If you don't want to configure the user, just omit the variable entirely.
 
 
-Steps to run the installation:
+Use via git clone
+-----------------
 
-1) git clone https://github.com/dougbtv/install-asterisk.git
-2) copy one of the examples above into asterisk.yml
-3) define hosts in a file named hosts
-4) command line: ansible-playbook -i hosts asterisk.yml -u root
+Alternatively, you can clone this repository and use the example `test.yml` playbook to test it out, and base your usage on that.
+
+1. Clone the repository `git clone https://github.com/dougbtv/install-asterisk.git`
+2. Change the defined hosts in the `test.inventory` file.
+3. Execute the: `ansible-playbook -i test.inventory test.yml`
 
 License
 -------
