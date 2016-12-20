@@ -1,0 +1,11 @@
+---
+# tasks file for odbc (runs before installing/compiling asterisk)
+
+- name: Install odbc 
+  yum: "pkg={{item}} state=installed"
+  with_items:
+    - unixODBC 
+    - unixODBC-devel 
+    - libtool-ltdl 
+    - libtool-ltdl-devel
+    - postgresql-odbc
