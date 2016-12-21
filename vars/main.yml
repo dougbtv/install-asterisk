@@ -9,3 +9,8 @@ iasterisk_url_sounds: http://downloads.asterisk.org/pub/telephony/sounds/asteris
 iasterisk_path_soundstarball: /usr/src/asterisk_sounds.tar.gz
 iasterisk_path_sound: /var/lib/asterisk/sounds/en
 iasterisk_odbc_support: false
+iasterisk_odbc_pg_database: asterisk
+iasterisk_odbc_pg_server: localhost
+iasterisk_odbc_pg_user: asterisk
+iasterisk_odbc_pg_password: secret
+
