@@ -14,6 +14,7 @@
   ini_file:
    dest: "/etc/odbc.ini"
    section: "asterisk-pg-connector"
+   create: true   
    option: "{{ item.option }}"
    value: "{{ item.value }}"
   with_items:
