@@ -21,7 +21,7 @@
     - { option: "Description", value: "PostgreSQL connection to 'asterisk' database"}
     - { option: "Driver", value:  "PostgreSQL" }
     - { option: "Database", value:  '{{iasterisk_odbc_pg_database}}' }
-    - { option: "Server", value:  '{{iasterisk_odbc_pg_server}}' }
+    - { option: "Servername", value:  '{{iasterisk_odbc_pg_server}}' }
     - { option: "Port", value: "5432" }
     - { option: "Protocol", value: "8.1" }
     - { option: "ReadOnly", value: "No" }
