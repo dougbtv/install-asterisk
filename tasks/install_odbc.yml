@@ -1,0 +1,32 @@
+---
+# tasks file for odbc (runs before installing/compiling asterisk)
+
+- name: Install odbc 
+  yum: "pkg={{item}} state=installed"
+  with_items:
+    - unixODBC 
+    - unixODBC-devel 
+    - libtool-ltdl 
+    - libtool-ltdl-devel
+    - postgresql-odbc
+
+- name: configure INI for ODBC in /etc/odbc.ini
+  ini_file:
+   dest: "/etc/odbc.ini"
+   section: "asterisk-pg-connector"
+   create: true   
+   option: "{{ item.option }}"
+   value: "{{ item.value }}"
+  with_items:
+    - { option: "Description", value: "PostgreSQL connection to 'asterisk' database"}
+    - { option: "Driver", value:  "PostgreSQL" }
+    - { option: "Database", value:  '{{iasterisk_odbc_pg_database}}' }
+    - { option: "Servername", value:  '{{iasterisk_odbc_pg_server}}' }
+    - { option: "Port", value: "5432" }
+    - { option: "Protocol", value: "8.1" }
+    - { option: "ReadOnly", value: "No" }
+    - { option: "RowVersioning", value: "No" }
+    - { option: "ShowSystemTables", value: "No" }
+    - { option: "ShowOidColumn", value: "No" }
+    - { option: "FakeOidIndex", value: "No" }
+

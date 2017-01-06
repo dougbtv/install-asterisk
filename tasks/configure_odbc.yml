@@ -1,0 +1,15 @@
+- name: configure ODBC in res_odbc.conf
+  ini_file:
+   dest: "/etc/asterisk/res_odbc.conf"
+   section: "asterisk"
+   option: "{{ item.option }}"
+   value: "{{ item.value }}"
+  with_items:
+    - { option: "enabled", value: "yes"}
+    - { option: "dsn", value: "asterisk-pg-connector"}
+    - { option: "username", value:  '{{iasterisk_odbc_pg_user}}'}
+    - { option: "password", value:  '{{iasterisk_odbc_pg_password}}'}
+    - { option: "pooling", value: "no" }
+    - { option: "limit", value: "1" }
+    - { option: "pre-connect", value: "yes" }
+
