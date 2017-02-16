@@ -24,6 +24,7 @@
     - net-snmp-devel
     - bzip2
     - jansson-devel
+    - make
 
 - include: pjsip.yml
 
