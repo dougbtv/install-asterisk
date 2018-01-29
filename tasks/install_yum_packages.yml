@@ -1,0 +1,27 @@
+---
+# tasks file for installing required packages
+
+- name: Install epel
+  yum: "pkg=epel-release state=installed"
+
+- name: Install asterisk pre-requisites via yum
+  yum: "pkg={{item}} state=present"
+  with_items:
+    - kernel-headers 
+    - gcc 
+    - gcc-c++ 
+    - cpp 
+    - ncurses 
+    - ncurses-devel 
+    - libxml2 
+    - libxml2-devel 
+    - sqlite 
+    - sqlite-devel 
+    - openssl-devel 
+    - newt-devel 
+    - kernel-devel 
+    - libuuid-devel 
+    - net-snmp-devel
+    - bzip2
+    - jansson-devel
+    - make

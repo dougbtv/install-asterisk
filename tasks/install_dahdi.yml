@@ -1,0 +1,24 @@
+---
+# tasks file for dahdi (runs before installing/compiling asterisk)
+
+- name: Remove existing DAHDI tarball
+  file: "path={{ iasterisk_dahdi_tarball }} state=absent"
+
+- name: Remove existing DAHDI source dir
+  file: "path={{ iasterisk_dahdi_srcdir }} state=absent"
+
+- name: Download DAHDI tarball
+  get_url: "url={{ iasterisk_url_dahdi }} dest={{ iasterisk_dahdi_tarball }}"
+
+- name: Create DAHDI install dir
+  file: "path={{ iasterisk_dahdi_srcdir }} state=directory"
+
+- name: Unpack DAHDI tarball
+  command: "tar -xzf {{ iasterisk_dahdi_tarball }} -C {{ iasterisk_dahdi_srcdir }} --strip-components=1"
+
+- name: "Build DAHDI from tarball IMPORTANT: This may fail if you haven't rebooted after a kernel update!"
+  command: "{{ item }} chdir={{ iasterisk_dahdi_srcdir }}"
+  with_items:
+    - make all
+    - make install
+    - make config
