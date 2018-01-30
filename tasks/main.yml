@@ -1,6 +1,9 @@
 ---
 - include: install_odbc.yml
   when: iasterisk_odbc_support
+- include: install_yum_packages.yml
+- include: install_dahdi.yml
+  when: iasterisk_dahdi_support
 - include: install.yml
   when: not skip_install is defined
 - include: configure.yml
