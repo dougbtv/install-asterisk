@@ -1,21 +1,15 @@
 ---
 # tasks file for install-asterisk
-- include: pjsip.yml
-
-- name: Remove existing tarball
-  file: "path={{ iasterisk_tarball }} state=absent"
-
-- name: Download asterisk tarball
-  get_url: "url={{ iasterisk_url }} dest={{ iasterisk_tarball }}"
+- include_tasks: pjsip.yml
 
 - name: Remove existing install source dir
   file: "path={{ iasterisk_srcdir }} state=absent"
 
-- name: Create install dir
+- name: Create install source dir
   file: "path={{ iasterisk_srcdir }} state=directory"
 
-- name: Unpack tarball
-  command: "tar -xzf {{ iasterisk_tarball }} -C {{ iasterisk_srcdir }} --strip-components=1"
+- name: Download and extract Asterisk source
+  unarchive: "src={{ iasterisk_url }} dest={{ iasterisk_srcdir }} remote_src=yes extra_opts=--strip-components=1"
 
 - name: Build Asterisk from tarball
   command: "{{ item }} chdir={{ iasterisk_srcdir }}"
@@ -31,13 +25,8 @@
     - make config
     - make samples
 
-- name: Download asterisk sounds (ulaw format)
-  get_url: "url={{ iasterisk_url_sounds }} dest={{ iasterisk_path_soundstarball }}"
-
 - name: Create install dir
   file: "path={{ iasterisk_srcdir }} state=directory"
 
-- name: Unpack sounds
-  command: "tar -xzf {{ iasterisk_path_soundstarball }} -C {{ iasterisk_path_sound }}"
-
-
+- name: Download and extract Asterisk sounds
+  unarchive: "src={{ iasterisk_url_sounds }} dest={{ iasterisk_path_sound }} remote_src=yes extra_opts=--strip-components=1"
