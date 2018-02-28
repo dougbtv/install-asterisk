@@ -2,11 +2,9 @@
 # vars file for install-asterisk
 asterisk_user: asterisk
 asterisk_group: asterisk
-iasterisk_tarball: /usr/src/iasterisk.tar.gz
 iasterisk_srcdir: /usr/src/iasterisk/
 iasterisk_url: http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-13-current.tar.gz
 iasterisk_url_sounds: http://downloads.asterisk.org/pub/telephony/sounds/asterisk-core-sounds-en-ulaw-current.tar.gz
-iasterisk_path_soundstarball: /usr/src/asterisk_sounds.tar.gz
 iasterisk_path_sound: /var/lib/asterisk/sounds/en
 iasterisk_odbc_support: false
 iasterisk_odbc_pg_database: asterisk
@@ -14,7 +12,5 @@ iasterisk_odbc_pg_server: localhost
 iasterisk_odbc_pg_user: asterisk
 iasterisk_odbc_pg_password: secret
 iasterisk_url_dahdi: http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz
-iasterisk_dahdi_tarball: /usr/src/dahdi.tar.gz
 iasterisk_dahdi_srcdir: /usr/src/dahdi/
 iasterisk_dahdi_support: false
-

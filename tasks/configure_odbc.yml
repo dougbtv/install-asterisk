@@ -1,3 +1,4 @@
+---
 - name: configure ODBC in res_odbc.conf
   ini_file:
    dest: "/etc/asterisk/res_odbc.conf"

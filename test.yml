@@ -1,7 +1,8 @@
+---
 - hosts: asterisk_machines
   vars_files:
     - vars/main.yml
   tasks:
-    - include: 'tasks/main.yml'
+    - include_tasks: 'tasks/main.yml'
 #      roles:
 #         - { role: username.rolename, x: 42 }
