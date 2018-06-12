@@ -1,2 +1,3 @@
 ---
 # defaults file for install-asterisk
+use_pjsip: true
