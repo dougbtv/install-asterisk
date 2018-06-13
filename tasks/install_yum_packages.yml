@@ -19,7 +19,7 @@
     - sqlite-devel 
     - openssl-devel 
     - newt-devel 
-    - kernel-devel-{{ ansible_kernel }}
+    - kernel-devel
     - libuuid-devel 
     - net-snmp-devel
     - bzip2
