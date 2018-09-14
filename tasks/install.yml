@@ -29,5 +29,8 @@
 - name: Create install dir
   file: "path={{ iasterisk_srcdir }} state=directory"
 
+- name: Create sounds dir
+  file: "path={{ iasterisk_path_sound }} state=directory"
+
 - name: Download and extract Asterisk sounds
   unarchive: "src={{ iasterisk_url_sounds }} dest={{ iasterisk_path_sound }} remote_src=yes extra_opts=--strip-components=1"
